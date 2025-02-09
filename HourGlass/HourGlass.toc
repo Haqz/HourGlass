@@ -1,0 +1,7 @@
+## Interface: 40401  # Match the WoW version
+## Title: HourGlass
+## Notes: Tracks reputation, gold and xp gained per hour
+## Author: Haqz
+## Version: 1.0
+HourGlass.lua
+HourGlassGUI.lua

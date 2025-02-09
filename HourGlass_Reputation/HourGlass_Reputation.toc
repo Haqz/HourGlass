@@ -1,0 +1,8 @@
+## Interface: 40401  # Match the WoW version
+## Title: HourGlass Reputation
+## Notes: Tracks reputation gained per hour (Requires HourGlass)
+## Author: Haqz
+## Version: 1.0
+## Dependencies: HourGlass
+HourGlass_ReputationLogic.lua
+HourGlass_ReputationGUI.lua
