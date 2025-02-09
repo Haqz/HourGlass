@@ -1,98 +1,99 @@
 -- Load dependencies
 local _, HourGlass = ... -- Namespace table
 
-function HourGlass.GUI:CreateGUI()
+_HourGlassShared.GUI.modules = {}
+
+function _HourGlassShared.GUI:CreateGUI()
     -- Main Frame
-    HourGlass.GUI.guiFrame = CreateFrame("Frame", "HourGlassFrame", UIParent, "BasicFrameTemplateWithInset")
-    HourGlass.GUI.guiFrame:SetSize(400, 300)
-    HourGlass.GUI.guiFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-    HourGlass.GUI.guiFrame:SetMovable(true)
-    HourGlass.GUI.guiFrame:EnableMouse(true)
-    HourGlass.GUI.guiFrame:RegisterForDrag("LeftButton")
-    HourGlass.GUI.guiFrame:SetScript("OnDragStart", HourGlass.GUI.guiFrame.StartMoving)
-    HourGlass.GUI.guiFrame:SetScript("OnDragStop", HourGlass.GUI.guiFrame.StopMovingOrSizing)
+    _HourGlassShared.GUI.guiFrame = CreateFrame("Frame", "HourGlassFrame", UIParent, "BasicFrameTemplateWithInset")
+    _HourGlassShared.GUI.guiFrame:SetSize(400, 300)
+    _HourGlassShared.GUI.guiFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+    _HourGlassShared.GUI.guiFrame:SetMovable(true)
+    _HourGlassShared.GUI.guiFrame:EnableMouse(true)
+    _HourGlassShared.GUI.guiFrame:RegisterForDrag("LeftButton")
+    _HourGlassShared.GUI.guiFrame:SetScript("OnDragStart", _HourGlassShared.GUI.guiFrame.StartMoving)
+    _HourGlassShared.GUI.guiFrame:SetScript("OnDragStop", _HourGlassShared.GUI.guiFrame.StopMovingOrSizing)
+    _HourGlassShared.GUI.guiFrame:SetFrameStrata("BACKGROUND")
 
     -- Title
-    HourGlass.GUI.guiFrame.title = HourGlass.GUI.guiFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-    HourGlass.GUI.guiFrame.title:SetPoint("CENTER", HourGlass.GUI.guiFrame.TitleBg, "CENTER", 0, 0)
-    HourGlass.GUI.guiFrame.title:SetText("HourGlass")
+    _HourGlassShared.GUI.guiFrame.title = _HourGlassShared.GUI.guiFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    _HourGlassShared.GUI.guiFrame.title:SetPoint("CENTER", _HourGlassShared.GUI.guiFrame.TitleBg, "CENTER", 0, 0)
+    _HourGlassShared.GUI.guiFrame.title:SetText("HourGlass")
 
     -- Content Frame (for module-specific content)
-    HourGlass.GUI.contentFrame = CreateFrame("Frame", nil, HourGlass.GUI.guiFrame)
-    HourGlass.GUI.contentFrame:SetPoint("TOPLEFT", HourGlass.GUI.guiFrame, "TOPLEFT", 10, -30)
-    HourGlass.GUI.contentFrame:SetPoint("BOTTOMRIGHT", HourGlass.GUI.guiFrame, "BOTTOMRIGHT", -10, 40)
-    HourGlass.GUI.contentFrame:SetFrameLevel(HourGlass.GUI.guiFrame:GetFrameLevel() + 1)
+    _HourGlassShared.GUI.contentFrame = CreateFrame("Frame", nil, _HourGlassShared.GUI.guiFrame)
+    _HourGlassShared.GUI.contentFrame:SetPoint("TOPLEFT", _HourGlassShared.GUI.guiFrame, "TOPLEFT", 10, -30)
+    _HourGlassShared.GUI.contentFrame:SetPoint("BOTTOMRIGHT", _HourGlassShared.GUI.guiFrame, "BOTTOMRIGHT", -10, 40)
+    _HourGlassShared.GUI.contentFrame:SetFrameStrata("HIGH")
 
     -- Tab Container (for tabs at the bottom)
-    HourGlass.GUI.tabContainer = CreateFrame("Frame", nil, HourGlass.GUI.guiFrame)
-    HourGlass.GUI.tabContainer:SetPoint("BOTTOMLEFT", HourGlass.GUI.guiFrame, "BOTTOMLEFT", 10, 10)
-    HourGlass.GUI.tabContainer:SetPoint("BOTTOMRIGHT", HourGlass.GUI.guiFrame, "BOTTOMRIGHT", -10, 10)
-    HourGlass.GUI.tabContainer:SetHeight(30)
+    _HourGlassShared.GUI.tabContainer = CreateFrame("Frame", nil, _HourGlassShared.GUI.guiFrame)
+    _HourGlassShared.GUI.tabContainer:SetPoint("BOTTOMLEFT", _HourGlassShared.GUI.guiFrame, "BOTTOMLEFT", 10, 10)
+    _HourGlassShared.GUI.tabContainer:SetPoint("BOTTOMRIGHT", _HourGlassShared.GUI.guiFrame, "BOTTOMRIGHT", -10, 10)
+    _HourGlassShared.GUI.tabContainer:SetHeight(30)
 
     -- Initialize Tabs
-    HourGlass.GUI.tabs = {}
-    HourGlass.GUI:CreateTab("Reputation")
+    _HourGlassShared.GUI.tabs = {}
+    _HourGlassShared.GUI:CreateTab("Reputation")
+    _HourGlassShared.GUI:CreateTab("Gold")
     -- Add more tabs here as needed, e.g., HourGlass.GUI:CreateTab("Gold")
 end
 
-function HourGlass.GUI:CreateTab(name)
-    local tab = CreateFrame("Button", nil, HourGlass.GUI.tabContainer)
+function _HourGlassShared.GUI:CreateTab(name)
+    local tab = CreateFrame("Button", nil, _HourGlassShared.GUI.tabContainer)
     tab:SetSize(80, 25)
     tab:SetText(name)
     tab:SetNormalFontObject("GameFontNormal")
     tab:SetHighlightFontObject("GameFontHighlight")
 
     -- Position the tab
-    if #HourGlass.GUI.tabs == 0 then
-        tab:SetPoint("LEFT", HourGlass.GUI.tabContainer, "LEFT", 0, 0)
+    if #_HourGlassShared.GUI.tabs == 0 then
+        tab:SetPoint("LEFT", _HourGlassShared.GUI.tabContainer, "LEFT", 0, 0)
     else
-        tab:SetPoint("LEFT", HourGlass.GUI.tabs[#HourGlass.GUI.tabs], "RIGHT", 5, 0)
+        tab:SetPoint("LEFT", _HourGlassShared.GUI.tabs[#_HourGlassShared.GUI.tabs], "RIGHT", 5, 0)
     end
 
     -- Store the tab in the table
-    table.insert(HourGlass.GUI.tabs, tab)
+    table.insert(_HourGlassShared.GUI.tabs, tab)
 
     -- Set the click handler
     tab:SetScript("OnClick", function()
-        HourGlass.GUI:SwitchTab(name)
+        _HourGlassShared.GUI:SwitchTab(name)
     end)
 end
 
-function HourGlass.GUI:SwitchTab(name)
+function _HourGlassShared.GUI:SwitchTab(name)
     -- Hide all content
-    for _, module in pairs(HourGlass.GUI.modules) do
+    for _, module in pairs(_HourGlassShared.GUI.modules) do
         if module.content then
             module.content:Hide()
         end
     end
 
-    -- Highlight the selected tab
-    for _, tab in pairs(HourGlass.GUI.tabs) do
-        if tab:GetText() == name then
-            tab:SetTextColor(1, 1, 0) -- Yellow for selected tab
-        else
-            tab:SetTextColor(1, 1, 1) -- White for unselected tabs
-        end
-    end
-
     -- Show the selected module's content
-    if HourGlass.GUI.modules[name] and HourGlass.GUI.modules[name].content then
-        HourGlass.GUI.modules[name].content:Show()
+    if _HourGlassShared.GUI.modules[name] and _HourGlassShared.GUI.modules[name].content then
+
+        _HourGlassShared.GUI.modules[name].content:Show()
     end
 end
 
-HourGlass.GUI.modules = {}
 
-function HourGlass.GUI:RegisterModule(name, contentFrame)
-    HourGlass.GUI.modules[name] = {
+function _HourGlassShared.GUI:RegisterModule(name, contentFrame)
+    _HourGlassShared.GUI.modules[name] = {
         content = contentFrame
     }
-    contentFrame:SetParent(HourGlass.GUI.contentFrame)
-    contentFrame:SetAllPoints(HourGlass.GUI.contentFrame)
+    contentFrame:SetParent(_HourGlassShared.GUI.contentFrame)
+    contentFrame:SetAllPoints(_HourGlassShared.GUI.contentFrame)
     contentFrame:Hide() -- Hide by default
 end
 
-function HourGlass.GUI:CreateMinimapButton()
+function _HourGlassShared.GUI:UpdateModuleContent(name, contentFrame)
+    _HourGlassShared.GUI.modules[name] = {
+        content = contentFrame
+    }
+end
+
+function _HourGlassShared.GUI:CreateMinimapButton()
     local button = CreateFrame("Button", "HourGlassMinimapButton", Minimap)
     button:SetFrameStrata("MEDIUM")
     button:SetSize(32, 32)
@@ -123,14 +124,14 @@ function HourGlass.GUI:CreateMinimapButton()
 
     -- Button Script: Toggle GUI on Click
     button:SetScript("OnClick", function()
-        if HourGlass.GUI.guiFrame then
-            if HourGlass.GUI.guiFrame:IsShown() then
-                HourGlass.GUI.guiFrame:Hide()
+        if _HourGlassShared.GUI.guiFrame then
+            if _HourGlassShared.GUI.guiFrame:IsShown() then
+                _HourGlassShared.GUI.guiFrame:Hide()
             else
-                HourGlass.GUI.guiFrame:Show()
+                _HourGlassShared.GUI.guiFrame:Show()
             end
         else
-            HourGlass.GUI:CreateGUI()
+            _HourGlassShared.GUI:CreateGUI()
         end
     end)
 

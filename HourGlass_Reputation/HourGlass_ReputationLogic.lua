@@ -1,11 +1,11 @@
-local _, HourGlass = ...
+local _, HourGlassReputation = ...
+local HourGlass = _HourGlassShared
 
-if HourGlass.factionData then
-    print(1)
-end
 -- Ensure the Reputation.Logic table exists
-HourGlass.Reputation = HourGlass.Reputation or {}
-HourGlass.Reputation.Logic = HourGlass.Reputation.Logic or {}
+HourGlass.Reputation = {}
+HourGlass.Reputation.factionData = {}
+HourGlass.Reputation.Logic = {}
+HourGlass.Reputation.GUI = {}
 
 if not HourGlass then
     error("HourGlass_Reputation requires the HourGlass addon to be enabled.")
@@ -25,7 +25,7 @@ end
 HourGlass.Reputation.Logic.FormatTime = FormatTime
 
 function HourGlass.Reputation.Logic:OnFactionUpdate()
-    local factionData = HourGlass.factionData
+    local factionData = HourGlass.Reputation.factionData
 
     for i = 1, GetNumFactions() do
         local name, _, _, _, _, earnedValue, _, _, isHeader = GetFactionInfo(i)
@@ -87,10 +87,20 @@ end
 
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("UPDATE_FACTION")
+frame:RegisterEvent("ADDON_LOADED")
 
 frame:SetScript("OnEvent", function(self, event, ...)
     if event == "UPDATE_FACTION" then
         HourGlass.Reputation.Logic:OnFactionUpdate()
+    elseif event == "ADDON_LOADED" then
+        if not HourGlass.Reputation.GUI.contentFrame then
+            -- Create the content frame for the Reputation module
+            HourGlass.Reputation.GUI.contentFrame = CreateFrame("Frame", nil, HourGlass.GUI.contentFrame)
+            HourGlass.Reputation.GUI.contentFrame:SetAllPoints(HourGlass.GUI.contentFrame)
+
+            -- Register the Reputation module with the GUI system
+            HourGlass.GUI:RegisterModule("Reputation", HourGlass.Reputation.GUI.contentFrame)
+        end
     end
 end)
 
