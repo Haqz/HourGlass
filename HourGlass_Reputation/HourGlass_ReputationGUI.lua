@@ -20,12 +20,15 @@ function HourGlass.Reputation.GUI:UpdateGUI()
     local offset = -10
     for factionName, data in pairs(HourGlass.Reputation.factionData) do
         if data.repGained > 0 then
-            local line = HourGlass.Reputation.GUI.contentFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-            line:SetPoint("TOPLEFT", HourGlass.GUI.contentFrame, "TOPLEFT", 10, offset)
-            line:SetText(string.format("%s: %.2f Rep/hour", factionName, data.repPerHour))
-            line:SetJustifyH("LEFT")
+            local line1 = HourGlass.GUI:CreateLine(
+                string.format("%s: %.2f Rep/hour", factionName, data.repPerHour),
+                HourGlass.Reputation.GUI.contentFrame,
+                HourGlass.GUI.contentFrame,
+                10,
+                offset
+            )
 
-            table.insert(HourGlass.Reputation.GUI.contentFrame.content, line)
+            table.insert(HourGlass.Reputation.GUI.contentFrame.content, line1)
             offset = offset - 20
         end
     end
