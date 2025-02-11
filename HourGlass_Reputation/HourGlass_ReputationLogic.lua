@@ -92,15 +92,6 @@ frame:RegisterEvent("ADDON_LOADED")
 frame:SetScript("OnEvent", function(self, event, ...)
     if event == "UPDATE_FACTION" then
         HourGlass.Reputation.Logic:OnFactionUpdate()
-    elseif event == "ADDON_LOADED" then
-        if not HourGlass.Reputation.GUI.contentFrame then
-            -- Create the content frame for the Reputation module
-            HourGlass.Reputation.GUI.contentFrame = CreateFrame("Frame", nil, HourGlass.GUI.contentFrame)
-            HourGlass.Reputation.GUI.contentFrame:SetAllPoints(HourGlass.GUI.contentFrame)
-
-            -- Register the Reputation module with the GUI system
-            HourGlass.GUI:RegisterModule("Reputation", HourGlass.Reputation.GUI.contentFrame)
-        end
     end
 end)
 

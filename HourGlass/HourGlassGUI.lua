@@ -61,7 +61,7 @@ function _HourGlassShared.GUI:CreateGUI()
     -- Initialize Tabs
     _HourGlassShared.GUI.tabs = {}
     _HourGlassShared.GUI:CreateTab("Reputation")
-    _HourGlassShared.GUI:CreateTab("Gold")
+    _HourGlassShared.GUI:CreateTab("Items")
     -- Add more tabs here as needed, e.g., HourGlass.GUI:CreateTab("Gold")
 
     local resizeButton = CreateFrame("Button", nil, _HourGlassShared.GUI.guiFrame)
@@ -122,9 +122,9 @@ end
 function _HourGlassShared.GUI:UpdateTabStates(selectedTab)
     for i, tab in pairs(_HourGlassShared.GUI.tabs) do
         if tab:GetText() == selectedTab then
-            PanelTemplates_SetTab(tab, 1) -- Highlight the selected tab
+            PanelTemplates_SetTab(tab, 1)
         else
-            PanelTemplates_SetTab(tab, 0) -- Unhighlight other tabs
+            PanelTemplates_SetTab(tab, 0)
         end
     end
 end
@@ -164,21 +164,21 @@ function _HourGlassShared.GUI:CreateMinimapButton()
 
     -- Add a mask texture
     local mask = button:CreateMaskTexture()
-    mask:SetTexture("Interface\\CharacterFrame\\TempPortraitAlphaMask") -- Circle mask (can use other shapes)
-    mask:SetSize(22, 22) -- Match the button size
-    mask:SetPoint("TOPLEFT", button, "TOPLEFT", 3, -3) -- Anchor to the top-left corner of the button
+    mask:SetTexture("Interface\\CharacterFrame\\TempPortraitAlphaMask")
+    mask:SetSize(22, 22)
+    mask:SetPoint("TOPLEFT", button, "TOPLEFT", 3, -3)
 
     -- Set the icon texture
     local icon = button:CreateTexture(nil, "ARTWORK")
-    icon:SetTexture("Interface\\ICONS\\Trade_Archaeology_GemmedDrinkingCup") -- The archaeology icon
-    icon:SetPoint("TOPLEFT", button, "TOPLEFT", 3, -3) -- Anchor to the top-left corner of the button
-    icon:SetSize(22, 22) -- Scale the icon (smaller than the button)
-    icon:AddMaskTexture(mask) -- Apply the mask to constrain the texture
+    icon:SetTexture("Interface\\ICONS\\Trade_Archaeology_GemmedDrinkingCup")
+    icon:SetPoint("TOPLEFT", button, "TOPLEFT", 3, -3)
+    icon:SetSize(22, 22)
+    icon:AddMaskTexture(mask)
 
     -- Add a border texture
     local border = button:CreateTexture(nil, "OVERLAY")
-    border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder") -- Blizzard's built-in border
-    border:SetSize(54, 54) -- Adjust size to match the button
+    border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+    border:SetSize(54, 54)
     border:SetPoint("TOPLEFT", button, "TOPLEFT", 0, 0)
 
     -- Button Script: Toggle GUI on Click

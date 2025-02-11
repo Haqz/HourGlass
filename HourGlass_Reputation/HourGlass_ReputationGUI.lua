@@ -6,8 +6,14 @@ if not HourGlass then
     return
 end
 
-
 function HourGlass.Reputation.GUI:UpdateGUI()
+    if not HourGlass.Reputation.GUI.contentFrame then
+        HourGlass.Reputation.GUI.contentFrame = CreateFrame("Frame", nil, HourGlass.GUI.contentFrame)
+        HourGlass.Reputation.GUI.contentFrame:SetAllPoints(HourGlass.GUI.contentFrame)
+
+        -- Register the Reputation module with the GUI system
+        HourGlass.GUI:RegisterModule("Reputation", HourGlass.Reputation.GUI.contentFrame)
+    end
     -- Clear previous content
     if HourGlass.Reputation.GUI.contentFrame.content then
         for _, line in ipairs(HourGlass.Reputation.GUI.contentFrame.content) do
@@ -17,6 +23,7 @@ function HourGlass.Reputation.GUI:UpdateGUI()
     HourGlass.Reputation.GUI.contentFrame.content = {}
 
     -- Populate the content frame with reputation data
+
     local offset = -10
     for factionName, data in pairs(HourGlass.Reputation.factionData) do
         if data.repGained > 0 then
