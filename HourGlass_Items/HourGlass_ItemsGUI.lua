@@ -13,9 +13,6 @@ function HourGlass.Items.GUI:UpdateGUI()
         HourGlass.Items.GUI.contentFrame = CreateFrame("Frame", nil, HourGlass.GUI.contentFrame)
         HourGlass.Items.GUI.contentFrame:SetAllPoints(HourGlass.GUI.contentFrame)
 
-        -- Register the Items module with the GUI system
-        HourGlass.GUI:RegisterModule("Items", HourGlass.Items.GUI.contentFrame)
-
         -- Create an input field for adding items
         HourGlass.Items.GUI.inputBox = CreateFrame("EditBox", nil, HourGlass.Items.GUI.contentFrame, "InputBoxTemplate")
         HourGlass.Items.GUI.inputBox:SetSize(150, 30)
@@ -36,6 +33,8 @@ function HourGlass.Items.GUI:UpdateGUI()
 
         -- Initialize a table to store remove buttons
         HourGlass.Items.GUI.removeButtons = {}
+        -- Register the Items module with the GUI system
+        HourGlass.GUI:RegisterModule("Items", HourGlass.Items.GUI.contentFrame)
     end
 
     -- Clear previous content
